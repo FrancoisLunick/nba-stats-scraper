@@ -10,4 +10,7 @@ numeric_cols = ['PTS', 'AST', 'TRB', 'FG%', '3P%', "FT%"]
 for col in numeric_cols:
     data_frame[col] = pandas.to_numeric(data_frame[col], errors='coerce')
 
-print(data_frame.head)
+data_sorted = data_frame.sort_values(by='PTS', ascending=False)    
+top_10_players = data_sorted.head(10)
+
+print(top_10_players)
