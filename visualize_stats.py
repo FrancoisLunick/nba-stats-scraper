@@ -1,9 +1,6 @@
 import pandas
 import matplotlib.pyplot
 
-# Read the CSV file into DataFrame
-data_frame = pandas.read_csv("data/2025_player_stats.csv")
-
 def generate_plots(data_file):
     """This function will clean the data and sort it to top 10 players using 'PTS' then display it un a horizontal bar graph
     
@@ -13,7 +10,9 @@ def generate_plots(data_file):
     Side Effects:
         - Displays a horizontal bar chart
     """
-
+    # Read the CSV file into DataFrame
+    data_frame = pandas.read_csv(data_file)
+    
     # Drop rows with invalid values
     data_cleaned = data_frame.dropna()
 
