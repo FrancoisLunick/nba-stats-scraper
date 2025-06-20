@@ -29,7 +29,6 @@ def fetch_parse(url):
             print("GET request successful")
             
             soup = BeautifulSoup(response.content, 'html5lib')
-            print(soup.prettify())
             
             table = soup.find("table", {"id": "per_game_stats"})
             
