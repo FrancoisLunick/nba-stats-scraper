@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup, Comment
+import pandas
+import os
 
 url = "https://www.basketball-reference.com/leagues/NBA_2025_per_game.html"
 
@@ -29,22 +31,24 @@ def fetch_parse(url):
             soup = BeautifulSoup(response.content, 'html5lib')
             print(soup.prettify())
             
-            # Find all of the HTML comments in the page
-            comments = soup.find_all(string=lambda text: isinstance(text, Comment))
-            print(comments)
+            table = soup.find("table", {"id": "per_game_stats"})
             
-            for comment in comments:
-                if 'per_game_stats' in comment:
-                    # Parse the comment's content as HTML
-                    new_soup = BeautifulSoup(comment, 'html5lib')
-                    # Find the stats table
-                    table = new_soup.find('table', id='per_game_stats')
+            if table:
+                # Convert the HTML table into a DataFrame
+                data_frame = pandas.read_html(str(table))[0]
                     
-                    print(table)
-        else:
-            # Print status code and response if the request is not successful
-            print(f"GET request failed with status code: {response.status_code}")
-            print(f"Response text: {response.text}")
+                data_frame = data_frame[data_frame['Player'] != 'Player']
+                
+                data_frame.reset_index(drop=True, inplace=True)
+                
+                if not os.path.exists("data"):
+                    os.makedirs("data")
+                data_frame.to_csv("data/2025_player_stats.csv", index=False)
+                print("Saved")
+                
+                return data_frame
+            else:
+                print("Could not find Per Stats table")
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
         
