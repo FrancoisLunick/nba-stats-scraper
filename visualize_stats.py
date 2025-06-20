@@ -18,9 +18,9 @@ def generate_plots(data_file):
 
     numeric_cols = ['PTS', 'AST', 'TRB', 'FG%', '3P%', "FT%"]
     for col in numeric_cols:
-        data_cleaned[col] = pandas.to_numeric(data_frame[col], errors='coerce')
+        data_cleaned.loc[:, col] = pandas.to_numeric(data_cleaned[col], errors='coerce')
 
-    data_sorted = data_frame.sort_values(by='PTS', ascending=False)    
+    data_sorted = data_cleaned.sort_values(by='PTS', ascending=False)    
     top_10_players = data_sorted.head(10)
 
     top_10_players.plot.barh(x='Player', y='PTS', title="Top 10 Players")
