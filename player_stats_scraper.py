@@ -51,5 +51,3 @@ def fetch_parse(url):
                 print("Could not find Per Stats table")
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
-        
-fetch_parse(url)
