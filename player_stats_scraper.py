@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup, Comment
 import pandas
 import os
+from io import StringIO
 
 url = "https://www.basketball-reference.com/leagues/NBA_2025_per_game.html"
 
@@ -34,7 +35,7 @@ def fetch_parse(url):
             
             if table:
                 # Convert the HTML table into a DataFrame
-                data_frame = pandas.read_html(str(table))[0]
+                data_frame = pandas.read_html(StringIO(str(table)))[0]
                     
                 data_frame = data_frame[data_frame['Player'] != 'Player']
                 
