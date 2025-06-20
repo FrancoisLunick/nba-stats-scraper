@@ -4,13 +4,8 @@ import pandas
 import os
 from io import StringIO
 
-url = "https://www.basketball-reference.com/leagues/NBA_2025_per_game.html"
-
-def fetch_parse(url):
+def fetch_parse():
     """Fetches NBA player stats from the Basketball reference url
-
-    Args:
-        url (string): the url to scrape NBA stats from
         
     Returns:
         pandas.DataFrame: A DataFrame which contains the stats of NBA players
@@ -21,6 +16,8 @@ def fetch_parse(url):
     Raises:
         Exception: If the request fails
     """
+    
+    url = "https://www.basketball-reference.com/leagues/NBA_2025_per_game.html"
     
     try:
         # Send an HTTP GET request to the URL
